@@ -51,6 +51,10 @@ public class battleSystem : MonoBehaviour
 
     string sceneName;
     public EnemyAI AIscript;
+
+    public GameObject CardDisplayArea;
+
+
     //SETTING UP AND START STATE------------------------------------------------------------
     void Start()
     {
@@ -135,28 +139,26 @@ public class battleSystem : MonoBehaviour
     }
 
 //Attack and defens play funcitons---------------------------------------------------------------
-//CALLED BY CARDUNIT ATKCARDUSED()
+//CALLED BY CARDUNIT ATKCARDUSED() which is called by button press
     public void OnAttackCard(float PlayerHPVal, float PlayerDefModVal, float PlayerAtkModVal, GameObject card, float EnemyHPVal, float EnemyDefModVal, float EnemyAtkModVal)
     {
         //what state we in?
-        if (state == BattleState.PLAYERTURN)//player attacking
-        {
+        //if (state == BattleState.PLAYERTURN)//player attacking
+       // {
+            StartCoroutine(DisplayCard(card));
+
             StartCoroutine(PlayerAttack(PlayerHPVal,PlayerDefModVal,PlayerAtkModVal,EnemyHPVal,EnemyDefModVal,EnemyAtkModVal));
-            Destroy(card);
+            //Destroy(card);
             return;
-        }
-        //if (state == BattleState.ENEMYTURN)//enemy attacking
-        //{
-         //   EnemyAttack(PHVal, MeaningVal, JoyVal);
-         //   Destroy(card);
-         //   return;
-        //}
+       // }
     }
     //PlayerHPVal, PlayerDefModVal, PlayerAtkModVal
-    public void EnemyCardUsed(float PlayerHPVal, float PlayerDefModVal, float PlayerAtkModVal, GameObject card,float EnemyHPVal, float EnemyDefModVal, float EnemyAtkModVal)
+
+    public void EnemyCardUsed(float PlayerHPVal, float PlayerDefModVal, float PlayerAtkModVal, GameObject card, float EnemyHPVal, float EnemyDefModVal, float EnemyAtkModVal)
     {
-            Destroy(card);
-            StartCoroutine(EnemyAttack(PlayerHPVal, PlayerDefModVal, PlayerAtkModVal, EnemyHPVal, EnemyDefModVal, EnemyAtkModVal));
+        // Destroy(card);
+        StartCoroutine(DisplayCard(card));
+        StartCoroutine(EnemyAttack(PlayerHPVal, PlayerDefModVal, PlayerAtkModVal, EnemyHPVal, EnemyDefModVal, EnemyAtkModVal));
     }
 
     //CALLED BY ON ATTACKCARDUSED()
@@ -164,13 +166,17 @@ public class battleSystem : MonoBehaviour
     {
         //do attack change Enemy stats 
         //convention card Enemyvals affect enemy
-        enemyUnit.currentHP = Mathf.Round(enemyUnit.currentHP + EnemyHPVal*playerUnit.currentAtkMod/enemyUnit.currentDefMod);// * BalanceAtkPHVal;
+        enemyUnit.currentHP = Mathf.Round(enemyUnit.currentHP + EnemyHPVal*playerUnit.currentAtkMod/enemyUnit.currentDefMod);
 
-        enemyUnit.currentAtkMod = enemyUnit.currentAtkMod + EnemyAtkModVal;// * BalanceAtkJoyVal;
-        enemyUnit.currentDefMod = enemyUnit.currentDefMod + EnemyDefModVal;// * BalanceAtkMeaningVal;
+        enemyUnit.currentAtkMod = enemyUnit.currentAtkMod + EnemyAtkModVal;
+        enemyUnit.currentDefMod = enemyUnit.currentDefMod + EnemyDefModVal;
 
         if (enemyUnit.currentAtkMod < 1) { enemyUnit.currentAtkMod = 1; }
         if (enemyUnit.currentDefMod < 1) { enemyUnit.currentDefMod = 1; }
+
+        if (enemyUnit.currentAtkMod > enemyUnit.maxAtkMod) { enemyUnit.currentAtkMod = enemyUnit.maxAtkMod; }
+        if (enemyUnit.currentDefMod > enemyUnit.maxDefMod) { enemyUnit.currentDefMod = enemyUnit.maxDefMod; }
+
         if (enemyUnit.currentHP > enemyUnit.maxHP) { enemyUnit.currentHP = enemyUnit.maxHP; }
         if (enemyUnit.currentHP < 0) { enemyUnit.currentHP = 0; }
 
@@ -179,14 +185,18 @@ public class battleSystem : MonoBehaviour
         enemyHUD.HPSlider.value = enemyUnit.currentHP;
 
         //do attack changing  Player stats    
-        playerUnit.currentHP = Mathf.Round(playerUnit.currentHP + PlayerHPVal*playerUnit.currentDefMod);// * BalanceAtkPHVal;
+        playerUnit.currentHP = Mathf.Round(playerUnit.currentHP + PlayerHPVal);
 
-        playerUnit.currentAtkMod = playerUnit.currentAtkMod + PlayerAtkModVal;// * BalanceAtkJoyVal;
-        playerUnit.currentDefMod = playerUnit.currentDefMod + PlayerDefModVal;// * BalanceAtkMeaningVal;
+        playerUnit.currentAtkMod = playerUnit.currentAtkMod + PlayerAtkModVal;
+        playerUnit.currentDefMod = playerUnit.currentDefMod + PlayerDefModVal;
  
 
         if (playerUnit.currentAtkMod < 1) { playerUnit.currentAtkMod = 1; }
         if (playerUnit.currentDefMod < 1) { playerUnit.currentDefMod = 1; }
+
+        if (playerUnit.currentAtkMod > playerUnit.maxAtkMod) { playerUnit.currentAtkMod = playerUnit.maxAtkMod; }
+        if (playerUnit.currentDefMod > playerUnit.maxDefMod) { playerUnit.currentDefMod = playerUnit.maxDefMod; }
+
         if (playerUnit.currentHP > playerUnit.maxHP) { playerUnit.currentHP = playerUnit.maxHP; }
         if (playerUnit.currentHP < 0) { playerUnit.currentHP = 0; }
 
@@ -219,17 +229,23 @@ public class battleSystem : MonoBehaviour
             StartCoroutine(EnemyTurn());
         }
     }
-//convention: enemy Vals affect player if enemy playing card. and visa versa. player refers to who is playing card
+
     IEnumerator EnemyAttack(float PlayerHPVal, float PlayerDefModVal, float PlayerAtkModVal, float EnemyHPVal, float EnemyDefModVal, float EnemyAtkModVal)
     {
-        //do attack changing Enemy player stats 
-        enemyUnit.currentHP = Mathf.Round(enemyUnit.currentHP + PlayerHPVal*enemyUnit.currentDefMod);// * BalanceAtkPHVal;
+        //convention: enemy Vals affect player if enemy playing card
 
-        enemyUnit.currentAtkMod = enemyUnit.currentAtkMod + PlayerAtkModVal;// * BalanceAtkJoyVal;
-        enemyUnit.currentDefMod = enemyUnit.currentDefMod + PlayerDefModVal;// * BalanceAtkMeaningVal;
+        //do attack changing Enemy player stats 
+        enemyUnit.currentHP = Mathf.Round(enemyUnit.currentHP + PlayerHPVal);
+
+        enemyUnit.currentAtkMod = enemyUnit.currentAtkMod + PlayerAtkModVal;
+        enemyUnit.currentDefMod = enemyUnit.currentDefMod + PlayerDefModVal;
 
         if (enemyUnit.currentAtkMod < 1) { enemyUnit.currentAtkMod = 1; }
         if (enemyUnit.currentDefMod < 1) { enemyUnit.currentDefMod = 1; }
+
+        if (enemyUnit.currentAtkMod > enemyUnit.maxAtkMod) { enemyUnit.currentAtkMod = enemyUnit.maxAtkMod; }
+        if (enemyUnit.currentDefMod > enemyUnit.maxDefMod) { enemyUnit.currentDefMod = enemyUnit.maxDefMod; }
+
         if (enemyUnit.currentHP > enemyUnit.maxHP) { enemyUnit.currentHP = enemyUnit.maxHP; }
         if (enemyUnit.currentHP < 0) { enemyUnit.currentHP = 0; }
 
@@ -240,13 +256,17 @@ public class battleSystem : MonoBehaviour
         //do attack changing  Player stats   
         //use attack mod to increase stats
         //use player defense mode to decrease
-        playerUnit.currentHP = Mathf.Round(playerUnit.currentHP + EnemyHPVal* enemyUnit.currentAtkMod / playerUnit.currentDefMod);// * BalanceAtkPHVal;
+        playerUnit.currentHP = Mathf.Round(playerUnit.currentHP + EnemyHPVal* enemyUnit.currentAtkMod / playerUnit.currentDefMod);
 
-        playerUnit.currentAtkMod = playerUnit.currentAtkMod + EnemyAtkModVal;// * BalanceAtkJoyVal;
-        playerUnit.currentDefMod = playerUnit.currentDefMod + EnemyDefModVal;// * BalanceAtkMeaningVal;
+        playerUnit.currentAtkMod = playerUnit.currentAtkMod + EnemyAtkModVal;
+        playerUnit.currentDefMod = playerUnit.currentDefMod + EnemyDefModVal;
 
         if (playerUnit.currentAtkMod < 1) { playerUnit.currentAtkMod = 1; }
         if (playerUnit.currentDefMod < 1) { playerUnit.currentDefMod = 1; }
+
+        if (playerUnit.currentAtkMod > playerUnit.maxAtkMod) { playerUnit.currentAtkMod = playerUnit.maxAtkMod; }
+        if (playerUnit.currentDefMod > playerUnit.maxDefMod) { playerUnit.currentDefMod = playerUnit.maxDefMod; }
+
         if (playerUnit.currentHP > playerUnit.maxHP) { playerUnit.currentHP = playerUnit.maxHP; }
         if (playerUnit.currentHP < 0) { playerUnit.currentHP = 0; }
 
@@ -279,72 +299,30 @@ public class battleSystem : MonoBehaviour
         }
 
     }
-
-
-
-
-        /*public void OnDefenseCard(float PHVal, float MeaningVal, float JoyVal, GameObject card)
-        {
-            //what state we in?
-            if (state == BattleState.PLAYERTURN)//player defending
-            {
-                StartCoroutine(PlayerDefend(PHVal, MeaningVal, JoyVal));
-                Destroy(card);
-                return;
-            }
-            if (state == BattleState.ENEMYTURN)//enemy defending
-            {
-                StartCoroutine(EnemyDefend(PHVal, MeaningVal, JoyVal));
-                Destroy(card);
-                return;
-            }
-        }*/   
-    
-
-    /*IEnumerator PlayerDefend(float PHVal, float MeaningVal, float JoyVal)
-    {
-        playerUnit.currentJoy+=JoyVal*BalanceDefJoyVal;
-        playerUnit.currentMeaning+=MeaningVal*BalanceDefMeaningVal;
-        playerUnit.currentPysicality+=PHVal*BalanceDefPHVal;
-
-        if (playerUnit.currentJoy > playerUnit.maxJoy) { playerUnit.currentJoy = playerUnit.maxJoy; }
-        if (playerUnit.currentMeaning > playerUnit.maxMeaning) { playerUnit.currentMeaning = playerUnit.maxMeaning; }
-        if (playerUnit.currentPysicality > playerUnit.maxPysicality) { playerUnit.currentPysicality = playerUnit.maxPysicality; }
-
-        state = BattleState.ENEMYTURN;
-        DialogText.text = "Enemy's Turn";
-
-        playerHUD.JoySlider.value = playerUnit.currentJoy;
-        playerHUD.PhysicalitySlider.value = playerUnit.currentPysicality;
-        playerHUD.MeaningSlider.value = playerUnit.currentMeaning;
-
-        yield return new WaitForSeconds(1f);
-        StartCoroutine(EnemyTurn());
-    }*/
-
-    /*IEnumerator EnemyDefend(float PHVal, float MeaningVal, float JoyVal)
-    {
-        enemyUnit.currentJoy += JoyVal * BalanceDefJoyVal;
-        enemyUnit.currentMeaning += MeaningVal * BalanceDefMeaningVal;
-        enemyUnit.currentPysicality += PHVal * BalanceDefPHVal;
-
-        if (enemyUnit.currentJoy > enemyUnit.maxJoy) { enemyUnit.currentJoy = enemyUnit.maxJoy; }
-        if (enemyUnit.currentMeaning > enemyUnit.maxMeaning) { enemyUnit.currentMeaning = enemyUnit.maxMeaning; }
-        if (enemyUnit.currentPysicality > enemyUnit.maxPysicality) { enemyUnit.currentPysicality = enemyUnit.maxPysicality; }
-
-        state = BattleState.PLAYERTURN;
-
-        enemyHUD.JoySlider.value = enemyUnit.currentJoy;
-        enemyHUD.PhysicalitySlider.value = enemyUnit.currentPysicality;
-        enemyHUD.MeaningSlider.value = enemyUnit.currentMeaning;
-        
-        yield return new WaitForSeconds(1f);
-        PlayerTurn();
-    }*/
-
-
-
     //-------------------------------------------------------------------------------------------------------------------------
+
+    IEnumerator DisplayCard(GameObject card)
+    {
+
+        if (state == BattleState.PLAYERTURN)
+        { 
+            card.transform.parent = CardDisplayArea.transform;
+            card.transform.position = new Vector3(0f, 0f, 0f);
+            CardDisplayArea.transform.localScale = new Vector3(1.5f, 1.5f, 0.2f);
+            card.GetComponent<Collider2D>().enabled = false;
+        }
+        else
+        {
+            card.transform.parent = CardDisplayArea.transform;
+            card.transform.Rotate(180, 0, 0, Space.Self);
+            card.transform.position = new Vector3(0f, 0f, 0f);
+            card.transform.localScale = new Vector3(1f, 1f, 0.2f);
+            CardDisplayArea.transform.localScale = new Vector3(1.5f, 1.5f, 0.2f);
+        }
+
+        yield return new WaitForSeconds(2f);
+        Destroy(card);
+    }
 
 
     //WON STATE---------------------------------------------------------------------------
