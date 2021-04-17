@@ -30,6 +30,7 @@ public class CardUnit : MonoBehaviour
     public Text EnemyAtkModValtxt;
     public Text EnemyDefModValtxt;
 
+
     CardSystem cardsystem;
 
     battleSystem battleSystem;
@@ -43,13 +44,108 @@ public class CardUnit : MonoBehaviour
 
         cardType.text = CardName;
 
-        PlayerHPValtxt.text = ""+ PlayerHPVal;
-        PlayerAtkModValtxt.text = ""+ PlayerAtkModVal;
-        PlayerDefModValtxt.text = ""+ PlayerDefModVal;
 
-        EnemyHPValtxt.text = "" + EnemyHPVal;
-        EnemyAtkModValtxt.text = "" + EnemyAtkModVal;
-        EnemyDefModValtxt.text = "" + EnemyDefModVal;
+
+        if (PlayerHPVal == 0)
+        {
+            PlayerHPValtxt.enabled = false;
+            //turn icon off? will have to make public image and redo cards
+        }
+        else {
+            if (PlayerHPVal > 0)
+            {
+                PlayerHPValtxt.text = "+" + PlayerHPVal;
+            }
+            else
+            {
+                PlayerHPValtxt.text = "" + PlayerHPVal;
+            }
+        }
+
+        if (PlayerAtkModVal == 0)
+        {
+            PlayerAtkModValtxt.enabled = false;
+            //turn icon off? will have to make public image and redo cards
+        }
+        else
+        {
+            if (PlayerAtkModVal > 0)
+            {
+                PlayerAtkModValtxt.text = "+" + PlayerAtkModVal;
+            }
+            else
+            {
+                PlayerAtkModValtxt.text = "" + PlayerAtkModVal;
+            }
+        }
+
+        if (PlayerDefModVal == 0)
+        {
+            PlayerDefModValtxt.enabled = false;
+            //turn icon off? will have to make public image and redo cards
+        }
+        else
+        {
+            if (PlayerDefModVal > 0)
+            {
+                PlayerDefModValtxt.text = "+" + PlayerDefModVal;
+            }
+            else
+            {
+                PlayerDefModValtxt.text = "" + PlayerDefModVal;
+            }
+        }
+
+        if (EnemyHPVal == 0)
+        {
+            EnemyHPValtxt.enabled = false;
+            //turn icon off? will have to make public image and redo cards
+        }
+        else
+        {
+            if (EnemyHPVal > 0)
+            {
+                EnemyHPValtxt.text = "+" + EnemyHPVal;
+            }
+            else
+            {
+                EnemyHPValtxt.text = "" + EnemyHPVal;
+            }
+        }
+
+        if (EnemyAtkModVal == 0)
+        {
+            EnemyAtkModValtxt.enabled = false;
+            //turn icon off? will have to make public image and redo cards
+        }
+        else
+        {
+            if (EnemyAtkModVal > 0)
+            {
+                EnemyAtkModValtxt.text = "+" + EnemyAtkModVal;
+            }
+            else
+            {
+                EnemyAtkModValtxt.text = "" + EnemyAtkModVal;
+            }
+        }
+
+        if (EnemyDefModVal == 0)
+        {
+            EnemyDefModValtxt.enabled = false;
+            //turn icon off? will have to make public image and redo cards
+        }
+        else
+        {
+            if (EnemyDefModVal > 0)
+            {
+                EnemyDefModValtxt.text = "+" + EnemyDefModVal;
+            }
+            else
+            {
+                EnemyDefModValtxt.text = "" + EnemyDefModVal;
+            }
+        }
     }
 
     private void OnMouseOver()
