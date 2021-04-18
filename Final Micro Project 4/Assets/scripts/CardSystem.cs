@@ -341,10 +341,10 @@ public class CardSystem : MonoBehaviour
 
         for (int x = 0; x < tier2Deck.Length - 1; x++)
         {
-            int rnd = Random.Range(x, deck.Length);
-            TempGO = deck[rnd];
-            deck[rnd] = deck[x];
-            deck[x] = TempGO;
+            int rnd = Random.Range(x, tier2Deck.Length);
+            TempGO = tier2Deck[rnd];
+            tier2Deck[rnd] = tier2Deck[x];
+            tier2Deck[x] = TempGO;
         }
     }
 }
