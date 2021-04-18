@@ -124,3 +124,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae82dbf4c33447a4683c6efbdcda2e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyUnit: {fileID: 0}
+  battleScript: {fileID: 0}

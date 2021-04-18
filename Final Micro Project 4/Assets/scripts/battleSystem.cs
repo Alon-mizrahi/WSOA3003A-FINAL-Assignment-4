@@ -18,7 +18,7 @@ public class battleSystem : MonoBehaviour
     public Transform enemySpawnPt;
     public Transform playerSpawnPt;
 
-    unit playerUnit;
+    public unit playerUnit;
     public unit enemyUnit;
 
     public GameObject enemyprefab;
@@ -79,9 +79,9 @@ public class battleSystem : MonoBehaviour
         AIscript = enemyGO.GetComponent<EnemyAI>();
 
         //change enemy name
-        if (sceneName == "1_level") { enemyUnit.UnitName = "Domenic"; }
-        if (sceneName == "2_level") { enemyUnit.UnitName = "Jake"; }
-        if (sceneName == "3_level") { enemyUnit.UnitName = "Vivian the Destroyer"; }
+        if (sceneName == "1_level") { enemyUnit.UnitName = "Domenic"; enemyUnit.currentDefMod = 2; }
+        if (sceneName == "2_level") { enemyUnit.UnitName = "Jake"; enemyUnit.currentDefMod = 2; }
+        if (sceneName == "3_level") { enemyUnit.UnitName = "Vivian the Destroyer"; enemyUnit.currentAtkMod = 2; }
 
         playerHUD.setHUD(playerUnit);
         enemyHUD.setHUD(enemyUnit);

@@ -8,6 +8,9 @@ public class CardSystem : MonoBehaviour
     public GameObject[] deck;
     private int deckIterator=0;
 
+    public GameObject[] tier2Deck;
+    private int tier2deckIterator = 0;
+
     public GameObject PlayerCardHolder1;
     public GameObject PlayerCardHolder2;
     public GameObject PlayerCardHolder3;
@@ -58,7 +61,6 @@ public class CardSystem : MonoBehaviour
 
         battlescript = battleSystem.GetComponent<battleSystem>();
         Shuffle(); 
-        //Debug.Log(battlescript.state);
     }
 
     private void Update()
@@ -81,122 +83,247 @@ public class CardSystem : MonoBehaviour
     {
         isStarted = true;
         if (battlescript.state == BattleState.PLAYERTURN) {
-            //check player doesnt have Full Hand
-            if (isTruePlayerCardHolder1 == false)
+
+            //if unit has less than 20 health draw from tier 2 deck
+            if (battlescript.playerUnit.currentHP <= 20)
             {
-                deck[deckIterator].transform.parent = PlayerCardHolder1.transform;
-                deck[deckIterator].transform.position = PlayerCardHolder1.transform.position;
-                deckIterator++;
-                isTruePlayerCardHolder1 = true;
-                battlescript.OnDrawButton();
-                return;
+                if (isTruePlayerCardHolder1 == false)
+                {
+                    tier2Deck[tier2deckIterator].transform.parent = PlayerCardHolder1.transform;
+                    tier2Deck[tier2deckIterator].transform.position = PlayerCardHolder1.transform.position;
+                    tier2deckIterator++;
+                    isTruePlayerCardHolder1 = true;
+                    battlescript.OnDrawButton();
+                    return;
+                }
+                else if (isTruePlayerCardHolder2 == false)
+                {
+                    tier2Deck[tier2deckIterator].transform.parent = PlayerCardHolder2.transform;
+                    tier2Deck[tier2deckIterator].transform.position = PlayerCardHolder2.transform.position;
+                    tier2deckIterator++;
+                    isTruePlayerCardHolder2 = true;
+                    battlescript.OnDrawButton();
+                    return;
+                }
+                else if (isTruePlayerCardHolder3 == false)
+                {
+                    tier2Deck[tier2deckIterator].transform.parent = PlayerCardHolder3.transform;
+                    tier2Deck[tier2deckIterator].transform.position = PlayerCardHolder3.transform.position;
+                    tier2deckIterator++;
+                    isTruePlayerCardHolder3 = true;
+                    battlescript.OnDrawButton();
+                    return;
+                }
+                else if (isTruePlayerCardHolder4 == false)
+                {
+                    tier2Deck[tier2deckIterator].transform.parent = PlayerCardHolder4.transform;
+                    tier2Deck[tier2deckIterator].transform.position = PlayerCardHolder4.transform.position;
+                    tier2deckIterator++;
+                    isTruePlayerCardHolder4 = true;
+                    battlescript.OnDrawButton();
+                    return;
+                }
+                else if (isTruePlayerCardHolder5 == false)
+                {
+                    tier2Deck[tier2deckIterator].transform.parent = PlayerCardHolder5.transform;
+                    tier2Deck[tier2deckIterator].transform.position = PlayerCardHolder5.transform.position;
+                    tier2deckIterator++;
+                    isTruePlayerCardHolder5 = true;
+                    battlescript.OnDrawButton();
+                    return;
+                }
             }
-            else if (isTruePlayerCardHolder2 == false)
+            else
             {
-                deck[deckIterator].transform.parent = PlayerCardHolder2.transform;
-                deck[deckIterator].transform.position = PlayerCardHolder2.transform.position;
-                deckIterator++;
-                isTruePlayerCardHolder2 = true;
-                battlescript.OnDrawButton();
-                return;
-            }
-            else if (isTruePlayerCardHolder3 == false)
-            {
-                deck[deckIterator].transform.parent = PlayerCardHolder3.transform;
-                deck[deckIterator].transform.position = PlayerCardHolder3.transform.position;
-                deckIterator++;
-                isTruePlayerCardHolder3 = true;
-                battlescript.OnDrawButton();
-                return;
-            }
-            else if (isTruePlayerCardHolder4 == false)
-            {
-                deck[deckIterator].transform.parent = PlayerCardHolder4.transform;
-                deck[deckIterator].transform.position = PlayerCardHolder4.transform.position;
-                deckIterator++;
-                isTruePlayerCardHolder4 = true;
-                battlescript.OnDrawButton();
-                return;
-            }
-            else if (isTruePlayerCardHolder5 == false)
-            {
-                deck[deckIterator].transform.parent = PlayerCardHolder5.transform;
-                deck[deckIterator].transform.position = PlayerCardHolder5.transform.position;
-                deckIterator++;
-                isTruePlayerCardHolder5 = true;
-                battlescript.OnDrawButton();
-                return;
+                //check player doesnt have Full Hand
+                if (isTruePlayerCardHolder1 == false)
+                {
+                    deck[deckIterator].transform.parent = PlayerCardHolder1.transform;
+                    deck[deckIterator].transform.position = PlayerCardHolder1.transform.position;
+                    deckIterator++;
+                    isTruePlayerCardHolder1 = true;
+                    battlescript.OnDrawButton();
+                    return;
+                }
+                else if (isTruePlayerCardHolder2 == false)
+                {
+                    deck[deckIterator].transform.parent = PlayerCardHolder2.transform;
+                    deck[deckIterator].transform.position = PlayerCardHolder2.transform.position;
+                    deckIterator++;
+                    isTruePlayerCardHolder2 = true;
+                    battlescript.OnDrawButton();
+                    return;
+                }
+                else if (isTruePlayerCardHolder3 == false)
+                {
+                    deck[deckIterator].transform.parent = PlayerCardHolder3.transform;
+                    deck[deckIterator].transform.position = PlayerCardHolder3.transform.position;
+                    deckIterator++;
+                    isTruePlayerCardHolder3 = true;
+                    battlescript.OnDrawButton();
+                    return;
+                }
+                else if (isTruePlayerCardHolder4 == false)
+                {
+                    deck[deckIterator].transform.parent = PlayerCardHolder4.transform;
+                    deck[deckIterator].transform.position = PlayerCardHolder4.transform.position;
+                    deckIterator++;
+                    isTruePlayerCardHolder4 = true;
+                    battlescript.OnDrawButton();
+                    return;
+                }
+                else if (isTruePlayerCardHolder5 == false)
+                {
+                    deck[deckIterator].transform.parent = PlayerCardHolder5.transform;
+                    deck[deckIterator].transform.position = PlayerCardHolder5.transform.position;
+                    deckIterator++;
+                    isTruePlayerCardHolder5 = true;
+                    battlescript.OnDrawButton();
+                    return;
+                }
             }
         }
+
 
         //enemy draw
         if (battlescript.state == BattleState.ENEMYTURN)
         {
-            //check player doesnt have full hand
-            if (isTrueEnemyCardHolder1 == false)
+            if (battlescript.enemyUnit.currentHP <= 20)
             {
-                deck[deckIterator].transform.parent = EnemyCardHolder1.transform;
-                deck[deckIterator].transform.position = EnemyCardHolder1.transform.position;
-                EnemyCardBack1.SetActive(true);
-                deck[deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
-                EnemyCardHolder1.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
-                deckIterator++;
-                isTrueEnemyCardHolder1 = true;
-                battlescript.state = BattleState.PLAYERTURN;
-                battlescript.PlayerTurn();
-                return;
+                if (isTrueEnemyCardHolder1 == false)
+                {
+                    tier2Deck[tier2deckIterator].transform.parent = EnemyCardHolder1.transform;
+                    tier2Deck[tier2deckIterator].transform.position = EnemyCardHolder1.transform.position;
+                    EnemyCardBack1.SetActive(true);
+                    tier2Deck[tier2deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
+                    EnemyCardHolder1.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                    tier2deckIterator++;
+                    isTrueEnemyCardHolder1 = true;
+                    battlescript.state = BattleState.PLAYERTURN;
+                    battlescript.PlayerTurn();
+                    return;
+                }
+                else if (isTrueEnemyCardHolder2 == false)
+                {
+                    tier2Deck[tier2deckIterator].transform.parent = EnemyCardHolder2.transform;
+                    tier2Deck[tier2deckIterator].transform.position = EnemyCardHolder2.transform.position;
+                    EnemyCardBack2.SetActive(true);
+                    tier2Deck[tier2deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
+                    EnemyCardHolder2.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                    tier2deckIterator++;
+                    isTrueEnemyCardHolder2 = true;
+                    battlescript.state = BattleState.PLAYERTURN;
+                    battlescript.PlayerTurn();
+                    return;
+                }
+                else if (isTrueEnemyCardHolder3 == false)
+                {
+                    tier2Deck[tier2deckIterator].transform.parent = EnemyCardHolder3.transform;
+                    tier2Deck[tier2deckIterator].transform.position = EnemyCardHolder3.transform.position;
+                    EnemyCardBack2.SetActive(true);
+                    tier2Deck[tier2deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
+                    EnemyCardHolder3.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                    tier2deckIterator++;
+                    isTrueEnemyCardHolder3 = true;
+                    battlescript.state = BattleState.PLAYERTURN;
+                    battlescript.PlayerTurn();
+                    return;
+                }
+                else if (isTrueEnemyCardHolder4 == false)
+                {
+                    tier2Deck[tier2deckIterator].transform.parent = EnemyCardHolder4.transform;
+                    tier2Deck[tier2deckIterator].transform.position = EnemyCardHolder4.transform.position;
+                    EnemyCardBack4.SetActive(true);
+                    tier2Deck[tier2deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
+                    EnemyCardHolder4.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                    tier2deckIterator++;
+                    isTrueEnemyCardHolder4 = true;
+                    battlescript.state = BattleState.PLAYERTURN;
+                    battlescript.PlayerTurn();
+                    return;
+                }
+                else if (isTrueEnemyCardHolder5 == false)
+                {
+                    tier2Deck[tier2deckIterator].transform.parent = EnemyCardHolder5.transform;
+                    tier2Deck[tier2deckIterator].transform.position = EnemyCardHolder5.transform.position;
+                    EnemyCardBack5.SetActive(true);
+                    tier2Deck[tier2deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
+                    EnemyCardHolder5.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                    tier2deckIterator++;
+                    isTrueEnemyCardHolder5 = true;
+                    battlescript.state = BattleState.PLAYERTURN;
+                    battlescript.PlayerTurn();
+                    return;
+                }
             }
-            else if (isTrueEnemyCardHolder2 == false)
+            else
             {
-                deck[deckIterator].transform.parent = EnemyCardHolder2.transform;
-                deck[deckIterator].transform.position = EnemyCardHolder2.transform.position;
-                EnemyCardBack2.SetActive(true);
-                deck[deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
-                EnemyCardHolder2.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
-                deckIterator++;
-                isTrueEnemyCardHolder2 = true;
-                battlescript.state = BattleState.PLAYERTURN;
-                battlescript.PlayerTurn();
-                return;
-            }
-            else if (isTrueEnemyCardHolder3 == false)
-            {
-                deck[deckIterator].transform.parent = EnemyCardHolder3.transform;
-                deck[deckIterator].transform.position = EnemyCardHolder3.transform.position;
-                EnemyCardBack3.SetActive(true);
-                deck[deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
-                EnemyCardHolder3.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
-                deckIterator++;
-                isTrueEnemyCardHolder3 = true;
-                battlescript.state = BattleState.PLAYERTURN;
-                battlescript.PlayerTurn();
-                return;
-            }
-            else if (isTrueEnemyCardHolder4 == false)
-            {
-                deck[deckIterator].transform.parent = EnemyCardHolder4.transform;
-                deck[deckIterator].transform.position = EnemyCardHolder4.transform.position;
-                EnemyCardBack4.SetActive(true);
-                deck[deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
-                EnemyCardHolder4.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
-                deckIterator++;
-                isTrueEnemyCardHolder4 = true;
-                battlescript.state = BattleState.PLAYERTURN;
-                battlescript.PlayerTurn();
-                return;
-            }
-            else if (isTrueEnemyCardHolder5 == false)
-            {
-                deck[deckIterator].transform.parent = EnemyCardHolder5.transform;
-                deck[deckIterator].transform.position = EnemyCardHolder5.transform.position;
-                EnemyCardBack5.SetActive(true);
-                deck[deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
-                EnemyCardHolder5.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
-                deckIterator++;
-                isTrueEnemyCardHolder5 = true;
-                battlescript.state = BattleState.PLAYERTURN;
-                battlescript.PlayerTurn();
-                return;
+                //check player doesnt have full hand
+                if (isTrueEnemyCardHolder1 == false)
+                {
+                    deck[deckIterator].transform.parent = EnemyCardHolder1.transform;
+                    deck[deckIterator].transform.position = EnemyCardHolder1.transform.position;
+                    EnemyCardBack1.SetActive(true);
+                    deck[deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
+                    EnemyCardHolder1.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                    deckIterator++;
+                    isTrueEnemyCardHolder1 = true;
+                    battlescript.state = BattleState.PLAYERTURN;
+                    battlescript.PlayerTurn();
+                    return;
+                }
+                else if (isTrueEnemyCardHolder2 == false)
+                {
+                    deck[deckIterator].transform.parent = EnemyCardHolder2.transform;
+                    deck[deckIterator].transform.position = EnemyCardHolder2.transform.position;
+                    EnemyCardBack2.SetActive(true);
+                    deck[deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
+                    EnemyCardHolder2.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                    deckIterator++;
+                    isTrueEnemyCardHolder2 = true;
+                    battlescript.state = BattleState.PLAYERTURN;
+                    battlescript.PlayerTurn();
+                    return;
+                }
+                else if (isTrueEnemyCardHolder3 == false)
+                {
+                    deck[deckIterator].transform.parent = EnemyCardHolder3.transform;
+                    deck[deckIterator].transform.position = EnemyCardHolder3.transform.position;
+                    EnemyCardBack3.SetActive(true);
+                    deck[deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
+                    EnemyCardHolder3.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                    deckIterator++;
+                    isTrueEnemyCardHolder3 = true;
+                    battlescript.state = BattleState.PLAYERTURN;
+                    battlescript.PlayerTurn();
+                    return;
+                }
+                else if (isTrueEnemyCardHolder4 == false)
+                {
+                    deck[deckIterator].transform.parent = EnemyCardHolder4.transform;
+                    deck[deckIterator].transform.position = EnemyCardHolder4.transform.position;
+                    EnemyCardBack4.SetActive(true);
+                    deck[deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
+                    EnemyCardHolder4.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                    deckIterator++;
+                    isTrueEnemyCardHolder4 = true;
+                    battlescript.state = BattleState.PLAYERTURN;
+                    battlescript.PlayerTurn();
+                    return;
+                }
+                else if (isTrueEnemyCardHolder5 == false)
+                {
+                    deck[deckIterator].transform.parent = EnemyCardHolder5.transform;
+                    deck[deckIterator].transform.position = EnemyCardHolder5.transform.position;
+                    EnemyCardBack5.SetActive(true);
+                    deck[deckIterator].transform.GetChild(0).GetComponentInChildren<Button>().interactable = false;
+                    EnemyCardHolder5.transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
+                    deckIterator++;
+                    isTrueEnemyCardHolder5 = true;
+                    battlescript.state = BattleState.PLAYERTURN;
+                    battlescript.PlayerTurn();
+                    return;
+                }
             }
         }
     }
@@ -210,6 +337,14 @@ public class CardSystem : MonoBehaviour
             TempGO = deck[rnd];
             deck[rnd] = deck[i];
             deck[i] = TempGO;
+        }
+
+        for (int x = 0; x < tier2Deck.Length - 1; x++)
+        {
+            int rnd = Random.Range(x, deck.Length);
+            TempGO = deck[rnd];
+            deck[rnd] = deck[x];
+            deck[x] = TempGO;
         }
     }
 }

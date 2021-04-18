@@ -16,8 +16,6 @@ public class EnemyAI : MonoBehaviour
     {
         cardsystem = GameObject.FindWithTag("CardSystem").GetComponent<CardSystem>();
         battleScript = GameObject.Find("BattleSystem").GetComponent<battleSystem>();
-        //GameObject EnemyGO = GameObject.Find("Enemy");
-        //enemyUnit = EnemyGO.GetComponent<unit>();
 
         Scene currentScene = SceneManager.GetActiveScene();
         sceneName = currentScene.name;
