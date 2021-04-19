@@ -51,6 +51,13 @@ public class CardSystem : MonoBehaviour
     battleSystem battlescript;
     private GameObject TempGO;
 
+
+
+    //soldier stuff
+    //public CardUnit cardunit;
+
+
+
     void Start()
     {
         EnemyCardBack1.SetActive(false);
@@ -83,6 +90,14 @@ public class CardSystem : MonoBehaviour
     {
         isStarted = true;
         if (battlescript.state == BattleState.PLAYERTURN) {
+
+            //look for sodier here for player
+            //apply affects to player
+            if (deck[deckIterator].GetComponent<CardUnit>().CardName == "Soldier")
+            {
+                battlescript.playerUnit.currentAtkMod += deck[deckIterator].GetComponent<CardUnit>().PlayerAtkModVal;
+                battlescript.playerUnit.currentDefMod += deck[deckIterator].GetComponent<CardUnit>().PlayerDefModVal;
+            }
 
             //if unit has less than 20 health draw from tier 2 deck
             if (battlescript.playerUnit.currentHP <= 20)
@@ -188,6 +203,14 @@ public class CardSystem : MonoBehaviour
         //enemy draw
         if (battlescript.state == BattleState.ENEMYTURN)
         {
+            //look for sodier here for player
+            //apply affects to player
+            if (deck[deckIterator].GetComponent<CardUnit>().CardName == "Soldier")
+            {
+                battlescript.enemyUnit.currentAtkMod += deck[deckIterator].GetComponent<CardUnit>().PlayerAtkModVal;
+                battlescript.enemyUnit.currentDefMod += deck[deckIterator].GetComponent<CardUnit>().PlayerDefModVal;
+            }
+
             if (battlescript.enemyUnit.currentHP <= 20)
             {
                 if (isTrueEnemyCardHolder1 == false)

@@ -156,7 +156,7 @@ public class CardUnit : MonoBehaviour
         if (CardName == "Brawler") { cardsystem.CardDescription.text = "Does high damage but its recklessness also hurts you"; }
         else if (CardName == "Caster") { cardsystem.CardDescription.text = "Effects the enemys modifier values"; }
         else if (CardName == "Healer") { cardsystem.CardDescription.text = "This card Focuses on healing and defence"; }
-        else if (CardName == "Soldier") { cardsystem.CardDescription.text = "Soldiers do low damage but increase your modifiers"; }//Soldiers are strong in groups. While holding in your hand it increases your Atk or Def modifiers
+        else if (CardName == "Soldier") { cardsystem.CardDescription.text = "Soldiers are good to keep in your hand. while holding them, they effect your modifier values. Once played the effect reverts"; }
     }
 
     private void OnMouseExit()

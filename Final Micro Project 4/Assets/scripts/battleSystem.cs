@@ -127,7 +127,7 @@ public class battleSystem : MonoBehaviour
     IEnumerator DrawCard()
     {
         //draw card and add to deck on cardsystem script
-        Debug.Log("cross call worked");
+        //Debug.Log("cross call worked");
         state = BattleState.ENEMYTURN;
         yield return new WaitForSeconds(1f);
         StartCoroutine(EnemyTurn());
@@ -147,7 +147,7 @@ public class battleSystem : MonoBehaviour
        // {
             StartCoroutine(DisplayCard(card));
 
-            StartCoroutine(PlayerAttack(PlayerHPVal,PlayerDefModVal,PlayerAtkModVal,EnemyHPVal,EnemyDefModVal,EnemyAtkModVal));
+            StartCoroutine(PlayerAttack(PlayerHPVal,PlayerDefModVal,PlayerAtkModVal,EnemyHPVal,EnemyDefModVal,EnemyAtkModVal,card));
             //Destroy(card);
             return;
        // }
@@ -158,12 +158,18 @@ public class battleSystem : MonoBehaviour
     {
         // Destroy(card);
         StartCoroutine(DisplayCard(card));
-        StartCoroutine(EnemyAttack(PlayerHPVal, PlayerDefModVal, PlayerAtkModVal, EnemyHPVal, EnemyDefModVal, EnemyAtkModVal));
+        StartCoroutine(EnemyAttack(PlayerHPVal, PlayerDefModVal, PlayerAtkModVal, EnemyHPVal, EnemyDefModVal, EnemyAtkModVal, card));
     }
 
     //CALLED BY ON ATTACKCARDUSED()
-    IEnumerator PlayerAttack(float PlayerHPVal, float PlayerDefModVal, float PlayerAtkModVal, float EnemyHPVal, float EnemyDefModVal, float EnemyAtkModVal)
+    IEnumerator PlayerAttack(float PlayerHPVal, float PlayerDefModVal, float PlayerAtkModVal, float EnemyHPVal, float EnemyDefModVal, float EnemyAtkModVal, GameObject card)
     {
+        if (card.GetComponent<CardUnit>().CardName == "Soldier")
+        {
+            PlayerDefModVal = -PlayerDefModVal;
+            PlayerAtkModVal = -PlayerAtkModVal;
+        }
+
         //do attack change Enemy stats 
         //convention card Enemyvals affect enemy
         enemyUnit.currentHP = Mathf.Round(enemyUnit.currentHP + EnemyHPVal*playerUnit.currentAtkMod/enemyUnit.currentDefMod);
@@ -230,9 +236,16 @@ public class battleSystem : MonoBehaviour
         }
     }
 
-    IEnumerator EnemyAttack(float PlayerHPVal, float PlayerDefModVal, float PlayerAtkModVal, float EnemyHPVal, float EnemyDefModVal, float EnemyAtkModVal)
+    IEnumerator EnemyAttack(float PlayerHPVal, float PlayerDefModVal, float PlayerAtkModVal, float EnemyHPVal, float EnemyDefModVal, float EnemyAtkModVal, GameObject card)
     {
         //convention: enemy Vals affect player if enemy playing card
+        if (card.GetComponent<CardUnit>().CardName == "Soldier")
+        {
+            PlayerDefModVal = -PlayerDefModVal;
+            PlayerAtkModVal = -PlayerAtkModVal;
+        }
+
+
 
         //do attack changing Enemy player stats 
         enemyUnit.currentHP = Mathf.Round(enemyUnit.currentHP + PlayerHPVal);
